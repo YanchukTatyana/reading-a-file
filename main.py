@@ -34,26 +34,36 @@ print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
 
 
 
-with open('1.txt', 'r', encoding='utf-8') as file_1:
-    line_1 = {}
-    count_1 = 0
-    for line in file_1.readlines():
-        count_1 += 1
-        line_1['1.txt'] = count_1
-with open('1.txt', 'r', encoding='utf-8') as file_1:
-    text_1 = file_1.read()
+import glob, os
+def new_txt_file():
+    path = 'C:\\Users\\1\\Desktop\\нетология\\ООП и айди\\Открытие и чтение файла\\Задача№3'
+    pattern = '*.txt'
 
-with open('2.txt', 'r', encoding='utf-8') as file_2:
-    line_2 = {}
-    count_2 = 0
-    for line in file_2.readlines():
-        count_2 += 1
-        line_2['2.txt'] = count_2
-with open('2.txt', 'r', encoding='utf-8') as file_2:
-    text_2 = file_2.read()
+    glob_path = os.path.join(path, pattern)
+    list_files = glob.glob(glob_path)
+    all_files=[]
+    if list_files:
+        for file_name in list_files:
+            with open(file_name,'r',encoding='utf-8') as fr:
+                file=[]
+                text=""
+                count=0
+                name_file=""
+                for line in fr:
+                    count+=1
+                    if(count<=1):
+                        name_file=os.path.basename(file_name)
+                    text+=line
 
+                file.append(str(count))
+                file.append(name_file)
+                file.append(text)
+                all_files.append(file)
+                all_files.sort()
 
-with open('result.txt', 'w', encoding='utf-8') as file_result:
-    join = sorted(list(line_ 1.items()) + list(line_2.items()), key=lambda x: x[1])
-    file_result.write(f'{join[0][0]}\n {join[0][1]}\n {text_2}\n {join[1][0]}\n {join[1][1]}\n {text_1}\n')
-print(file_result)
+    with open('result.txt', 'w', encoding='utf-8') as file_result:
+        for my_file in all_files:
+            file_result.write(f'{my_file[1]}\n{my_file[0]}\n{my_file[2]}\n')
+
+new_txt_file()
+
